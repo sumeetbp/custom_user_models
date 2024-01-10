@@ -3,13 +3,27 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+# from .filters import CustomUserFilter
 from .models import CustomUser
 from datetime import datetime
+import re
+# from django_filters.views import FilterView
 
 # Create your views here.
 
+# class AuthorsAndSellersView(FilterView):
+#     model = CustomUser
+#     template_name = 'aurthors_and_sellers.html'
+#     filterset_class = CustomUserFilter
+#     content_object_name = 'users'
+
 def home(request):
     return render(request, "authentication/index.html")
+
+def validate_email(email):
+    # Regular expression for basic email format validation
+    email_regex = r'^[^\s@]+@gmail\.com$'
+    return re.match(email_regex, email)
 
 def signup(request):
 
@@ -27,6 +41,10 @@ def signup(request):
         #         birth_year_int = int(birth_year)
         #     except ValueError:
         #         pass
+
+        if not validate_email(email):
+            messages.error(request, "Please enter a valid email address.")
+            return render(request, "authentication/signup.html")
 
         def calculate_age(birth_year):
             current = datetime.now().year

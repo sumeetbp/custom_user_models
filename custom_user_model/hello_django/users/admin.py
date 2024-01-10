@@ -20,8 +20,7 @@ class CustomUserAdmin(UserAdmin):
             "fields": (
                 "email", "password1", "password2", "is_staff",
                 "is_active", "groups", "user_permissions"
-            )}
-        ),
+            )}),
     )
     search_fields = ("email",)
     ordering = ("email",)

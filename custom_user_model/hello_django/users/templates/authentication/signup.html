@@ -100,7 +100,7 @@
 									<div class="row pb-30">
 										<div class="col-6">
 											<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" name="public_visibility" id="customCheck1" required>
+												<input type="checkbox" class="custom-control-input" name="public_visibility" id="customCheck1">
 												<label class="custom-control-label" for="customCheck1">Public Visibility</label>
 											</div>
 										</div>
@@ -124,12 +124,12 @@
 			</div>
 		</div>
 
-        <script src="vendors/scripts/core.js"></script>
-		<script src="vendors/scripts/script.min.js"></script>
-		<script src="vendors/scripts/process.js"></script>
-		<script src="vendors/scripts/layout-settings.js"></script>
-		<script src="src/plugins/jquery-steps/jquery.steps.js"></script>
-		<script src="vendors/scripts/steps-setting.js"></script>
+        <script src={% static "vendors/scripts/core.js"%}></script>
+		<script src={% static "vendors/scripts/script.min.js"%}></script>
+		<script src={% static "vendors/scripts/process.js"%}></script>
+		<script src={% static "vendors/scripts/layout-settings.js"%}></script>
+		<script src={% static "src/plugins/jquery-steps/jquery.steps.js"%}></script>
+		<script src={% static "vendors/scripts/steps-setting.js"%}></script>
     </body>
 
 </html>
