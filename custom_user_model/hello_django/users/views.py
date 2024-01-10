@@ -1,4 +1,4 @@
-from django.shortcuts import redirect,render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -20,6 +20,7 @@ def signup(request):
         password2 = request.POST['password2']
         birth_year = request.POST['birth_year']
         address = request.POST['address']
+        public_visibility = request.POST.get('public_visibility')
 
         # if birth_year:
         #     try:
@@ -29,16 +30,23 @@ def signup(request):
 
         def calculate_age(birth_year):
             current = datetime.now().year
-            return current - int(birth_year)
+            y = birth_year[0:4]
+            return current - int(y)
 
         age = calculate_age(birth_year)
 
         if password1 == password2:
+            if public_visibility == 'on':
+                public_visibility = True
+            else:
+                public_visibility = False
             myuser = CustomUser.objects.create_user(username=username, email=email, password=password1)
-            myuser.birth_year = birth_year 
+            myuser.birth_year = birth_year
             myuser.address = address
             myuser.age = age
+            myuser.public_visibility = public_visibility
             myuser.save()
+            print(age)
             messages.success(request, "Your account has been successfully created.")
             return redirect('signin')
         else:
@@ -46,7 +54,7 @@ def signup(request):
             return render(request, "authentication/signup.html")
 
         messages.success(request, "Your account has been successfully created.")
-        
+
         return redirect('signin')
 
     return render(request, "authentication/signup.html")
@@ -59,10 +67,10 @@ def signin(request):
 
         print(f"Username: {username}, Password: {password}")
 
-        user = authenticate(request, username = username, password = password)
+        user = authenticate(request, username=username, password=password)
         print(user)
         if user is not None:
-            login(request,user)
+            login(request, user)
             return render(request, "authentication/index.html")
         else:
             messages.error(request, "Incorrect Credentials")

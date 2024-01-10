@@ -16,7 +16,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("The Email must be set"))
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_fields)
-        user.public_visibility = extra_fields.get('public_visibility', True)
+        # user.public_visibility = extra_fields.get('public_visibility', False)
         # user.birth_year = extra_fields.get('birth_year')
         # user.address = extra_fields.get('address')
 
@@ -27,7 +27,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self,username, email, password=None, **extra_fields):
+    def create_superuser(self, username, email, password=None, **extra_fields):
         """
         Create and save a SuperUser with the given email and password.
         """
