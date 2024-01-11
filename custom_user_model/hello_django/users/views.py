@@ -4,12 +4,32 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .filters import CustomUserFilter
-from .models import CustomUser
+from .models import CustomUser, UploadedFileMetadata
 from datetime import datetime
 import re
 from django_filters.views import FilterView
 
 # Create your views here.
+
+def upload_files(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        uploaded_file = request.FILES.get('upload')
+        if uploaded_file:
+            user = request.user
+
+            metadata = UploadedFileMetadata.objects.create(
+                user=user,
+                upload=uploaded_file,
+                title=request.POST.get('title'),
+                description=request.POST.get('description'),
+                visibility=bool(request.POST.get('visibility')),
+                cost=request.POST.get('cost'),
+                year_of_publish=request.POST.get('year_of_publish')
+            )
+
+            return redirect('home')
+
+    return render(request, "upload_files.html")
 
 def AuthorsAndSellersView(request):
     model = CustomUser
@@ -85,10 +105,10 @@ def signin(request):
         username = request.POST['username']
         password = request.POST['password1']
 
-        #print(f"Username: {username}, Password: {password}")
+        # print(f"Username: {username}, Password: {password}")
 
         user = authenticate(request, username=username, password=password)
-        #print(user)
+        # print(user)
         if user is not None:
             login(request, user)
             return render(request, "authentication/index.html")

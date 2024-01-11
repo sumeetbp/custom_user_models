@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        {% comment %} <style>
+            div {
+                margin: 300px 500px
+            }
+        </style> {% endcomment %}
+    </head>
+    <body>
+        <div>
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_files' %}">
+                {% csrf_token %}
+                
+                <label for="upload"><p>Upload File (PDF or JPEG only)</p></label>
+                <input type="file" name="upload" id="upload" accept=".pdf, .jpeg, .jpg"/>
+
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" />
+
+                <label for="description">Description:</label>
+                <textarea name="description" id="description"></textarea>
+
+                <label for="visibility">Visibility:</label>
+                <input type="checkbox" name="visibility" id="visibility" />
+
+                <label for="cost">Cost:</label>
+                <input type="text" name="cost" id="cost" />
+
+                <label for="year_of_publish">Year of Publish:</label>
+                <input type="text" name="year_of_publish" id="year_of_publish" />
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <script src="" async defer></script>
+    </body>
+</html>
