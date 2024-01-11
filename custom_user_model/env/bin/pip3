@@ -1,4 +1,4 @@
-#!/Users/sumeetbpavitrakar/Desktop/Markytics/custom_user_model/env/bin/python3
+#!/Users/sumeetbpavitrakar/Desktop/Markytics/custom_user_models/custom_user_model/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
