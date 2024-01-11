@@ -9,7 +9,7 @@ from .managers import CustomUserManager
 class CustomUser(AbstractUser, PermissionsMixin):
     username = models.CharField(max_length=100)
     email = models.EmailField(_("email address"), unique=True)
-    public_visibility = models.BooleanField(default=True)
+    public_visibility = models.BooleanField(default=False)
     birth_year = models.CharField(max_length=100)
     address = models.TextField(_("address"))
     age = models.PositiveIntegerField(_("age"), default=0, null=True, blank=True)

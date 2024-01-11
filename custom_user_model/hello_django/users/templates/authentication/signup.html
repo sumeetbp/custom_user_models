@@ -57,6 +57,14 @@
 							<div class="wizard-content">
 								<form class="tab-wizard2 wizard-circle wizard" action='{% url "signup" %}' method="post">
 								{% csrf_token %}
+								{% for message in messages %}
+									<div class="alert alert-{{ messages.tags }} alert-dismissable fade show" roles="alert">
+										<strong>Message:</strong> {{ message }}
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								{% endfor %}
 									<section>
 										<div class="form-wrap max-width-600 mx-auto">
 											<div class="form-group row">

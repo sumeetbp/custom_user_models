@@ -3,19 +3,21 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-# from .filters import CustomUserFilter
+from .filters import CustomUserFilter
 from .models import CustomUser
 from datetime import datetime
 import re
-# from django_filters.views import FilterView
+from django_filters.views import FilterView
 
 # Create your views here.
 
-# class AuthorsAndSellersView(FilterView):
-#     model = CustomUser
-#     template_name = 'aurthors_and_sellers.html'
-#     filterset_class = CustomUserFilter
-#     content_object_name = 'users'
+def AuthorsAndSellersView(request):
+    model = CustomUser
+    template_name = 'authors_and_sellers.html'
+    filterset_class = CustomUserFilter
+    context_object_name = 'users'
+    users = CustomUser.objects.filter(public_visibility=True)
+    return render(request, 'authors_and_sellers.html', {'users': users})
 
 def home(request):
     return render(request, "authentication/index.html")
@@ -83,10 +85,10 @@ def signin(request):
         username = request.POST['username']
         password = request.POST['password1']
 
-        print(f"Username: {username}, Password: {password}")
+        #print(f"Username: {username}, Password: {password}")
 
         user = authenticate(request, username=username, password=password)
-        print(user)
+        #print(user)
         if user is not None:
             login(request, user)
             return render(request, "authentication/index.html")
